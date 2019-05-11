@@ -13,16 +13,21 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Connection.MainConnection;
+import Controller.ExecuteLaboratorium;
 import javax.swing.table.DefaultTableModel;
+import Model.laboratorium;
+import javax.swing.JOptionPane;
 
 public class Pengelolaan_Lab extends javax.swing.JFrame {
-
+    DefaultTableModel model;
     /**
      * Creates new form Pengelolaan_Lab
      */
     public Pengelolaan_Lab() {
         initComponents();
-        datatable();
+        String []judul={"id_lab","Nama Lab","Kapasitas"}; //judul kolom
+        model = new DefaultTableModel(judul,0);
+        tblLab.setModel(model);
     }
 
    public void datatable(){
@@ -30,7 +35,7 @@ public class Pengelolaan_Lab extends javax.swing.JFrame {
        tbl.addColumn("id_lab");
        tbl.addColumn("Nama_lab");
        tbl.addColumn("kapasitas");
-       Table.setModel(tbl);
+       tblLab.setModel(tbl);
        
    }
            
@@ -42,7 +47,7 @@ public class Pengelolaan_Lab extends javax.swing.JFrame {
         edtLab = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        Table = new javax.swing.JTable();
+        tblLab = new javax.swing.JTable();
         edtID = new javax.swing.JTextField();
         btnSimpan = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
@@ -58,7 +63,7 @@ public class Pengelolaan_Lab extends javax.swing.JFrame {
 
         jLabel1.setText("ID Lab");
 
-        Table.setModel(new javax.swing.table.DefaultTableModel(
+        tblLab.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -69,7 +74,7 @@ public class Pengelolaan_Lab extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3"
             }
         ));
-        jScrollPane1.setViewportView(Table);
+        jScrollPane1.setViewportView(tblLab);
 
         btnSimpan.setText("Simpan");
         btnSimpan.addActionListener(new java.awt.event.ActionListener() {
@@ -170,6 +175,14 @@ public class Pengelolaan_Lab extends javax.swing.JFrame {
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         // TODO add your handling code here:
+        laboratorium lab = new laboratorium();
+        lab.setID(edtID.getText().toString());
+        lab.setNama_lab(edtLab.getText().toString());
+        lab.setKapasitas(edtKapasitas.getText().toString());
+        
+        ExecuteLaboratorium el = new ExecuteLaboratorium();
+        String hasil = el.Pengelolaan_Lab(lab);
+        JOptionPane.showMessageDialog(rootPane, hasil);
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     /**
@@ -208,7 +221,6 @@ public class Pengelolaan_Lab extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable Table;
     private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnKeluar;
     private javax.swing.JButton btnSimpan;
@@ -221,5 +233,6 @@ public class Pengelolaan_Lab extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblLab;
     // End of variables declaration//GEN-END:variables
 }
